@@ -1,0 +1,25 @@
+# Unity generated files
+[Ll]ibrary/
+[Tt]emp/
+[Oo]bj/
+[Bb]uild/
+[Bb]uilds/
+[Ll]ogs/
+[Uu]ser[Ss]ettings/
+[Mm]emoryCaptures/
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# Visual Studio / JetBrains Rider
+.vs/
+*.csproj
+*.sln
+*.suo
+*.tmp
+*.user
+*.unityproj
+*.pidb
+*.booproj
+*.svd

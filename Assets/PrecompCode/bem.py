@@ -27,4 +27,4 @@ def p_bar(object_mesh, sample_points, frequency, participation, c=343, rho_air=1
     p_bar = slp_potential.evaluate(pressure_solution)
     
     print("Finish Calculating p_bar -------------------")
-    return np.real(p_bar)
+    return p_bar

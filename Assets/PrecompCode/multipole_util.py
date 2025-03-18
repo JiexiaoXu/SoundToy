@@ -10,7 +10,6 @@ def spherical_coords(x, center):
     
 def psi_val(l, m, k, r, theta, phi):
     r = np.maximum(r, 1e-10) 
-
     hankel_val = scipy.special.spherical_jn(l, k * r) - 1j * scipy.special.spherical_yn(l, k * r)
     if np.isnan(hankel_val).any() or np.isinf(hankel_val).any():
         hankel_val = 0.0
@@ -22,7 +21,7 @@ def multipole_basis_func(x, sample_points, frequency, speed_of_sound=343):
     k = 2 * np.pi * frequency / speed_of_sound
     N = len(sample_points)
 
-    lm_pairs = [(0, 0), (1, -1), (1, 0), (1, 1)]
+    lm_pairs = [(0,0), (1,0), (1,-1), (1,1)]
     V_x = np.zeros((N, 4), dtype=np.complex128)
 
     for idx, sample in enumerate(sample_points):
@@ -57,7 +56,7 @@ def fin_multipole(sample_points, sources, frequency, speed_of_sound=343):
     
     # init basis
     # V_ij, jth multipole function evaluated at ith point
-    lm_pairs = [(0,0), (1,-1), (1,0), (1,1)]
+    lm_pairs = [(0,0), (1,0), (1,-1), (1,1)]
     V = np.zeros((N, M * len(lm_pairs)), dtype=np.complex128)
     
     for i, sample in enumerate(sample_points):
@@ -76,15 +75,15 @@ def compute_coefficient(weight, multipole_pos, p_bar, sample_points, frequency):
     V = fin_multipole(sample_points, multipole_pos, frequency)
     
     weight = np.array(weight, dtype=np.float64)
-    V = np.array(V, dtype=np.float64)
-    p_bar = np.array(p_bar, dtype=np.float64)
-    b = np.array(weight @ p_bar, dtype=np.float64)
+    b = np.array(weight @ p_bar, dtype=np.complex128)
     
     U, S, VT = np.linalg.svd(weight @ V, full_matrices=False)
-    S_truncated = np.where(S > 1e-6 * S.max(), 1.0 / S, 0.0)
+    S_truncated = np.zeros_like(S)
+    mask = S > 1e-6
+    S_truncated[mask] = 1.0 / S[mask]
     
-    A_pinv = np.array(VT.T @ np.diag(S_truncated) @ U.T, dtype=np.float64)
+    A_pinv = np.array(VT.T @ np.diag(S_truncated) @ U.T, dtype=np.complex128)
     
-    c = np.array(A_pinv @ b, dtype=np.float64)    
+    c = np.array(A_pinv @ b, dtype=np.complex128)    
     return c
     

@@ -1,0 +1,19 @@
+Density	8.470E-06 kg / mm^3
+Young's Modulus	97000.00 MPa
+Poisson's Ratio	0.31
+Yield Strength	140.00 MPa
+Ultimate Tensile Strength	415.00 MPa
+Thermal Conductivity	0.096 W / (mm C)
+Thermal Expansion Coefficient	2.090E-05 / C
+Specific Heat	380.00 J / (kg C)
+
+
+Frequency	Participation X	Participation Y	Participation Z
+Mode 1: 101.171 Hz	61.244601	0	0
+Mode 2: 156.719 Hz	0	63.0976975	0
+Mode 3: 224.079 Hz	0	0	0
+Mode 4: 431.00 Hz	22.3486006	0	0.0001
+Mode 5: 450.849 Hz	0	0	78.8592994
+Mode 6: 495.658 Hz	0	22.4906996	0
+Mode 7: 653.693 Hz	0	0	0
+Mode 8: 865.311 Hz	2.61620004	0.0001	0

@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections;
 
 public class ProceduralSoundImpact : MonoBehaviour
 {
@@ -8,6 +9,8 @@ public class ProceduralSoundImpact : MonoBehaviour
     private float decayRate = 0.005f; 
     private float sampleRate = 48000f; 
     private float phase = 0f;
+
+    private Color origColor;
 
     void Start()
     {
@@ -22,6 +25,9 @@ public class ProceduralSoundImpact : MonoBehaviour
         audioSource.spatialBlend = 1; 
         audioSource.volume = 1.0f;
         audioSource.Play();
+
+        // Store original color
+        origColor = GetComponent<Renderer>().material.color;
     }
 
     void OnCollisionEnter(Collision collision)
@@ -31,9 +37,22 @@ public class ProceduralSoundImpact : MonoBehaviour
 
         if (impactForce > 0.5f) // Ensure weak collisions don't trigger sound
         {
+            // get current and change color for one moment and change back to original color
+            GetComponent<Renderer>().material.color = Color.red;
+
+
             frequency = Mathf.Lerp(200, 1000, impactForce / 10f); // Impact pitch
             amplitude = Mathf.Clamp(impactForce / 10f, 0f, 1f);
+
+            // Reset amplitude and color after 0.1 seconds
+            StartCoroutine(ResetColor());
         }
+    }
+
+    IEnumerator ResetColor()
+    {
+        yield return new WaitForSeconds(0.02f);
+        GetComponent<Renderer>().material.color = origColor;
     }
 
     void OnAudioFilterRead(float[] data, int channels)

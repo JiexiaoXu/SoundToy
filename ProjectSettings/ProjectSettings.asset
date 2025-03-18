@@ -13,7 +13,7 @@ PlayerSettings:
   useOnDemandResources: 0
   accelerometerFrequency: 60
   companyName: DefaultCompany
-  productName: Acoustic Toy
+  productName: SoundSim
   defaultCursor: {fileID: 0}
   cursorHotspot: {x: 0, y: 0}
   m_SplashScreenBackgroundColor: {r: 0.13725491, g: 0.12156863, b: 0.1254902, a: 1}
@@ -837,14 +837,14 @@ PlayerSettings:
   editorAssembliesCompatibilityLevel: 1
   m_RenderingPath: 1
   m_MobileRenderingPath: 1
-  metroPackageName: Acoustic Toy
+  metroPackageName: SoundSim
   metroPackageVersion: 
   metroCertificatePath: 
   metroCertificatePassword: 
   metroCertificateSubject: 
   metroCertificateIssuer: 
   metroCertificateNotAfter: 0000000000000000
-  metroApplicationDescription: Acoustic Toy
+  metroApplicationDescription: SoundSim
   wsaImages: {}
   metroTileShortName: 
   metroTileShowName: 0
@@ -918,7 +918,7 @@ PlayerSettings:
   cloudProjectId: 26120567-139a-4a9e-8709-898b74976711
   framebufferDepthMemorylessMode: 0
   qualitySettingsNames: []
-  projectName: Acoustic Toy
+  projectName: SoundSim
   organizationId: jasperxu
   cloudEnabled: 0
   legacyClampBlendShapeWeights: 0

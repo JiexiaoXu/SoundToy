@@ -1,5 +1,5 @@
-output/101
-output/157
-output/431
-output/451
-output/496
+bronze/101
+bronze/157
+bronze/431
+bronze/451
+bronze/496

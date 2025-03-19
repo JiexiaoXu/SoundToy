@@ -4,6 +4,7 @@ from multipole_algo import multipole_placement
 from multipole_util import multipole_basis_func
 from multipole_util import compute_coefficient
 import struct
+import sys
 
 import numpy as np
 
@@ -13,7 +14,7 @@ surface_path = '/home/jiexiao/class/493v/cse493v-25wi/final_project/assets/surfa
 speed_of_sound = 343  # m/s (Air)
 rho_air = 1.21  # kg/m³ (Air)
 
-modal_data = [
+modal_data_bronze = [
     {"frequency": 101.171, "participation": np.array([61.244601, 0, 0])},
     {"frequency": 156.719, "participation": np.array([0, 63.0976975, 0])},
     {"frequency": 431.00, "participation": np.array([22.3486006, 0, 0.0001])},
@@ -21,6 +22,26 @@ modal_data = [
     {"frequency": 495.658, "participation": np.array([0, 22.4906996, 0])},
 ]
 
+modal_data_glass = [
+    {"frequency": 165.229, "participation": np.array([61.1814022, 0, 0])},
+    {"frequency": 259.775, "participation": np.array([0, 62.3784006, 0])},
+    {"frequency": 721.696, "participation": np.array([22.1323997, 0, 0.0001])},
+    {"frequency": 737.924, "participation": np.array([0, 0, 80.2614987])},
+    {"frequency": 837.943, "participation": np.array([0, 22.9219005, 0])},
+]
+
+modal_data_plastic = [
+    {"frequency": 43.949, "participation": np.array([61.1796021, 0, 0])},
+    {"frequency": 67.372, "participation": np.array([0, 63.4679973, 0])},
+    {"frequency": 183.914, "participation": np.array([22.5201994, 0, 0.0002])},
+    {"frequency": 195.117, "participation": np.array([0, 0, 77.5843978])},
+    {"frequency": 210.158, "participation": np.array([0, 22.2424999, 0])},
+]
+
+
+def print_usage():
+    print("Usage: python main.py <source_number> <candidates_number>")
+    sys.exit(1) # Exit with an error code
 
 def export_sound_data(frequency, positions, coefficients, output_dir="output"):
     # Export sound data to a file or any other format
@@ -68,6 +89,12 @@ def export_sound_data(frequency, positions, coefficients, output_dir="output"):
     print(f"Exported {k_filename} (wave number = {k:.6f}).")
 
 if __name__ == '__main__':
+    if len(sys.argv) < 3:
+        print_usage()
+        
+    source_number = int(sys.argv[1])
+    candidates_number = int(sys.argv[2])
+
     membrane, surface = load_mesh(membrane_path, surface_path)
     offset(membrane, surface)
     
@@ -75,7 +102,7 @@ if __name__ == '__main__':
     
     # bem solver, produce sound pressure evaluation on vertices of membrane
     
-    for mode in modal_data:
+    for mode in modal_data_plastic:
         frequency = mode["frequency"]
         participation = mode["participation"]
         if np.linalg.norm(participation) < 1e-6:
@@ -97,8 +124,8 @@ if __name__ == '__main__':
             offset_surface=membrane,
             sample_points=sample_points,
             frequency=frequency,
-            num_sources=3,
-            num_candidates=10,
+            num_sources=source_number,
+            num_candidates=candidates_number,
             multipole_basis_func=multipole_basis_func
         )
         
@@ -115,7 +142,8 @@ if __name__ == '__main__':
         export_sound_data(
             frequency=frequency,
             positions=selected_positions,
-            coefficients=coefficients
+            coefficients=coefficients,
+            output_dir="plastic"
         )
         print("=========================================")
 
